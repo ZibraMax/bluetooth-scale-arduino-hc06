@@ -42,6 +42,7 @@ Plotly.newPlot("mass", [dataMass], layout_mass);
 Plotly.newPlot("flow", [dataFlow], layout_vel);
 
 button.addEventListener("click", async () => {
+	text.innerHTML = "Loading!";
 	const port = await navigator.serial.requestPort();
 	await port.open({ baudRate: 9600 });
 	const textDecoder = new TextDecoderStream();
