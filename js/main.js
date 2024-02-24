@@ -96,7 +96,7 @@ button.addEventListener("click", async () => {
 			let masa = parseFloat(datos[1]);
 			let velocidad = parseFloat(datos[2]);
 			let n_datos = parseInt(datos[3]);
-			text.innerHTML = masa;
+			text.innerHTML = masa + " g";
 
 			if (tiempo < dataFlow.x[dataFlow.x.length - 1]) {
 				dataMass.x = [0];
