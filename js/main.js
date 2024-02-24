@@ -2,7 +2,7 @@ const text = document.getElementById("value");
 const button = document.getElementById("bton");
 const buttonTare = document.getElementById("tare");
 const buttonRestart = document.getElementById("buttonRestart");
-
+const buttonStop = document.getElementById("buttonStop");
 class LineBreakTransformer {
 	constructor() {
 		this.chunks = "";
@@ -54,20 +54,36 @@ button.addEventListener("click", async () => {
 	const writer = textEncoder.writable.getWriter();
 	await writer.write("k");
 	await writer.write("t");
+	let connected = true;
 
 	buttonRestart.addEventListener("click", async () => {
-		writer.write("k");
-		writer.write("t");
+		try {
+			writer.write("k");
+			writer.write("t");
+		} catch (error) {}
 		dataMass.x = [0];
 		dataMass.y = [0];
 		dataFlow.x = [0];
 		dataFlow.y = [0];
+		Plotly.redraw("mass");
+		Plotly.redraw("flow");
 	});
 	buttonTare.addEventListener("click", async () => {
 		writer.write("t");
 	});
+	buttonStop.addEventListener("click", async () => {
+		connected = false;
+		reader.cancel();
+		await readableStreamClosed.catch(() => {
+			/* Ignore the error */
+		});
 
-	while (true) {
+		writer.close();
+		await writableStreamClosed;
+
+		await port.close();
+	});
+	while (connected) {
 		const { value, done } = await reader.read();
 		if (done) {
 			reader.releaseLock();
@@ -80,6 +96,12 @@ button.addEventListener("click", async () => {
 			let masa = parseFloat(datos[1]);
 			let velocidad = parseFloat(datos[2]);
 			let n_datos = parseInt(datos[3]);
+			if (tiempo < dataFlow.x[dataFlow.x.length - 1]) {
+				dataMass.x = [0];
+				dataMass.y = [0];
+				dataFlow.x = [0];
+				dataFlow.y = [0];
+			}
 			dataMass.x.push(tiempo);
 			dataFlow.x.push(tiempo);
 			dataMass.y.push(masa);

@@ -73,6 +73,15 @@ void manipulateInput(int input)
 
 void loop()
 {
+  if (Serial.available())
+  {
+    manipulateInput(Serial.read());
+  }
+  if (hc06.available())
+  {
+    int btmsg = hc06.read();
+    manipulateInput(btmsg);
+  }
   cantidad++;
   float actual = scale.get_units();
   promedio += (actual - promedio) / cantidad;
@@ -98,13 +107,5 @@ void loop()
     hc06.println(msg2);
     reset();
   }
-  if (Serial.available())
-  {
-    manipulateInput(Serial.read());
-  }
-  if (hc06.available())
-  {
-    int btmsg = hc06.read();
-    manipulateInput(btmsg);
-  }
+  
 }
