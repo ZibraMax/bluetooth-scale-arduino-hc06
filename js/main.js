@@ -89,13 +89,14 @@ button.addEventListener("click", async () => {
 			reader.releaseLock();
 			break;
 		}
-		text.innerHTML = value;
 		if (!value.includes("#")) {
 			let datos = value.split("//");
 			let tiempo = parseFloat(datos[0]) / 1000.0;
 			let masa = parseFloat(datos[1]);
 			let velocidad = parseFloat(datos[2]);
 			let n_datos = parseInt(datos[3]);
+			text.innerHTML = masa;
+
 			if (tiempo < dataFlow.x[dataFlow.x.length - 1]) {
 				dataMass.x = [0];
 				dataMass.y = [0];
@@ -108,6 +109,8 @@ button.addEventListener("click", async () => {
 			dataFlow.y.push(velocidad);
 			Plotly.redraw("mass");
 			Plotly.redraw("flow");
+		} else {
+			text.innerHTML = value;
 		}
 	}
 });
