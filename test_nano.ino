@@ -38,6 +38,7 @@ void tarar()
   hc06.println("#Tarando...");
   scale.tare();
   reset();
+  hc06.println("#Listo!");
 }
 
 void reset()
@@ -88,7 +89,7 @@ void manipulateInput(int input)
   }
   else if (input == (int)'s')
   {
-    midiendo=true;
+    midiendo = true;
   }
 }
 

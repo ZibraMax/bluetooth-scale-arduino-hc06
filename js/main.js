@@ -4,6 +4,7 @@ const button = document.getElementById("bton");
 const buttonTare = document.getElementById("tare");
 const buttonRestart = document.getElementById("buttonRestart");
 const buttonStop = document.getElementById("buttonStop");
+const buttonDisconect = document.getElementById("buttonDisconect");
 const buttonPause = document.getElementById("buttonPause");
 const buttonDownload = document.getElementById("buttonDownload");
 class LineBreakTransformer {
@@ -130,6 +131,23 @@ button.addEventListener("click", async () => {
 			writer.write("t");
 		});
 		buttonStop.addEventListener("click", async () => {
+			await writer.write("t");
+			await writer.write("k");
+			if (!paused) {
+				await writer.write("p");
+				paused = true;
+			}
+			dataMass.x = [0];
+			dataMass.y = [0];
+			dataFlow.x = [0];
+			dataFlow.y = [0];
+			Plotly.redraw("mass");
+			Plotly.redraw("flow");
+
+			textTime.innerHTML = "0 s";
+			buttonPause.innerHTML = "Start!";
+		});
+		buttonDisconect.addEventListener("click", async () => {
 			connected = false;
 			reader.cancel();
 			await readableStreamClosed.catch(() => {
@@ -148,27 +166,28 @@ button.addEventListener("click", async () => {
 				break;
 			}
 			if (!value.includes("#")) {
-				let datos = value.split("//");
-				let tiempo = parseFloat(datos[0]) / 1000.0;
-				let masa = parseFloat(datos[1]);
-				let velocidad = parseFloat(datos[2]);
-				let n_datos = parseInt(datos[3]);
-				text.innerHTML = masa + " g";
-				textTime.innerHTML = tiempo + " s";
+				if (!paused) {
+					let datos = value.split("//");
+					let tiempo = parseFloat(datos[0]) / 1000.0;
+					let masa = parseFloat(datos[1]);
+					let velocidad = parseFloat(datos[2]);
+					let n_datos = parseInt(datos[3]);
+					text.innerHTML = masa + " g";
+					textTime.innerHTML = tiempo + " s";
 
-				if (tiempo < dataFlow.x[dataFlow.x.length - 1]) {
-					dataMass.x = [0];
-					dataMass.y = [0];
-					dataFlow.x = [0];
-					dataFlow.y = [0];
+					if (tiempo < dataFlow.x[dataFlow.x.length - 1]) {
+						dataMass.x = [0];
+						dataMass.y = [0];
+						dataFlow.x = [0];
+						dataFlow.y = [0];
+					}
+					dataMass.x.push(tiempo);
+					dataFlow.x.push(tiempo);
+					dataMass.y.push(masa);
+					dataFlow.y.push(velocidad);
+					Plotly.redraw("mass");
+					Plotly.redraw("flow");
 				}
-				tiempo -= offsetTime;
-				dataMass.x.push(tiempo);
-				dataFlow.x.push(tiempo);
-				dataMass.y.push(masa);
-				dataFlow.y.push(velocidad);
-				Plotly.redraw("mass");
-				Plotly.redraw("flow");
 			} else {
 				text.innerHTML = value;
 			}
