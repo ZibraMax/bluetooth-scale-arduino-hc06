@@ -11,19 +11,37 @@
 			media="screen"
 			href="./css/main.css"
 		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic" />
+
 		<script
 			src="https://cdn.plot.ly/plotly-2.29.1.min.js"
 			charset="utf-8"
 		></script>
 	</head>
-	<body>
-		<button id="bton">Connect</button>
-		<button id="tare">Tare</button>
-		<button id="buttonRestart">Restart plots</button>
-		<button id="buttonStop">Disconnect/Stop!</button>
-		<p>Mass: <span id="value"></span></p>
-		<div id="mass" style="width: 45%; height: 500px; float: left"></div>
-		<div id="flow" style="width: 45%; height: 500px; float: left"></div>
+	<body style="margin: 20px">
+		<div class="column-container">
+			<div class="two-column">
+				<button id="bton">Connect</button>
+				<button id="tare">Tare</button>
+				<button id="buttonRestart">Restart plots</button>
+				<button id="buttonStop">Disconnect/Stop!</button>
+			</div>
+			<div class="two-column">
+				<p class="measure-meter">Mass: <span id="value"></span></p>
+				<p class="measure-meter">Time: <span id="valueTime"></span></p>
+			</div>
+		</div>
+
+		<div class="column-container plot-container">
+			<div id="mass" class="two-column plots"></div>
+			<div id="flow" class="two-column plots"></div>
+		</div>
 		<script type="module" src="./js/main.js"></script>
 	</body>
 </html>

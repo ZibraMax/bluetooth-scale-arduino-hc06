@@ -1,4 +1,5 @@
 const text = document.getElementById("value");
+const textTime = document.getElementById("valueTime");
 const button = document.getElementById("bton");
 const buttonTare = document.getElementById("tare");
 const buttonRestart = document.getElementById("buttonRestart");
@@ -28,6 +29,9 @@ const layout_mass = {
 	yaxis: {
 		title: "Mass [g]",
 	},
+	font: {
+		family: "Space Mono, monospace",
+	},
 };
 const layout_vel = {
 	title: "Flow vs time",
@@ -36,6 +40,9 @@ const layout_vel = {
 	},
 	yaxis: {
 		title: "Flow [g/s]",
+	},
+	font: {
+		family: "Space Mono, monospace",
 	},
 };
 Plotly.newPlot("mass", [dataMass], layout_mass);
@@ -97,6 +104,7 @@ button.addEventListener("click", async () => {
 			let velocidad = parseFloat(datos[2]);
 			let n_datos = parseInt(datos[3]);
 			text.innerHTML = masa + " g";
+			textTime.innerHTML = tiempo + " s";
 
 			if (tiempo < dataFlow.x[dataFlow.x.length - 1]) {
 				dataMass.x = [0];
