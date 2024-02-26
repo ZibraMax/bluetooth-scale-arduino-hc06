@@ -24,24 +24,27 @@
 			charset="utf-8"
 		></script>
 	</head>
-	<body style="margin: 20px">
-		<div class="column-container">
-			<div class="two-column">
-				<button id="bton">Connect</button>
-				<button id="tare">Tare</button>
-				<button id="buttonRestart">Restart plots</button>
-				<button id="buttonStop">Disconnect/Stop!</button>
-			</div>
-			<div class="two-column">
-				<p class="measure-meter">Mass: <span id="value"></span></p>
-				<p class="measure-meter">Time: <span id="valueTime"></span></p>
-			</div>
-		</div>
-
+	<body style="padding: 20px">
 		<div class="column-container plot-container">
 			<div id="mass" class="two-column plots"></div>
 			<div id="flow" class="two-column plots"></div>
 		</div>
+
+		<div class="float-meters-container">
+			<p class="measure-meter">Mass: <span id="value"></span></p>
+			<hr />
+			<p class="measure-meter">Time: <span id="valueTime"></span></p>
+		</div>
+
+		<div class="float-button-container">
+			<button id="bton">Connect</button>
+			<button id="tare">Tare</button>
+			<button id="buttonPause">Pause</button>
+			<button id="buttonRestart">Restart</button>
+			<button id="buttonStop">Disconnect/Stop!</button>
+			<button id="buttonDownload">Download data</button>
+		</div>
+
 		<script type="module" src="./js/main.js"></script>
 	</body>
 </html>

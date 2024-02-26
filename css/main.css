@@ -20,5 +20,39 @@ button {
 	width: 100%;
 }
 .plot-container {
-	height: 700px;
+	height: 500px;
+}
+.float-button-container {
+	position: fixed;
+	display: inline;
+	bottom: 40px;
+	right: 50px;
+	text-align: center;
+}
+
+.float-meters-container {
+	position: fixed;
+	display: inline;
+	min-width: 200px;
+	max-height: 130px;
+	bottom: 40px;
+	left: 50px;
+	padding: 5px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	text-align: left;
+	border: solid lightgray;
+	border-radius: 10px;
+	box-shadow: 10px 5px 5px lightgray;
+}
+@media screen and (max-width: 990px) and (orientation: portrait) {
+	.two-column {
+		width: 100%;
+	}
+	.float-meters-container {
+		position: fixed;
+		display: inline;
+		top: 40px;
+		text-align: left;
+	}
 }
