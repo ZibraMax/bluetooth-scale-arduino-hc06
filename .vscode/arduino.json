@@ -1,0 +1,6 @@
+{
+	"board": "arduino:avr:uno",
+	"port": "COM10",
+	"programmer": "avrisp",
+	"sketch": "pressure_sensor\\pressure_sensor.ino"
+}
