@@ -6,7 +6,8 @@ button {
 }
 
 .measure-meter {
-	margin: 0;
+	margin: 0px;
+	padding-right: 5px;
 }
 
 .two-column {
@@ -46,6 +47,11 @@ button {
 	z-index: 100;
 }
 @media screen and (max-width: 990px) and (orientation: portrait) {
+	html,
+	body {
+		height: 100%;
+		overflow: hidden;
+	}
 	.two-column {
 		width: 100%;
 	}
@@ -61,6 +67,10 @@ button {
 		width: 100%;
 		z-index: 100;
 	}
+	.wrapper {
+		height: 90%;
+		overflow-y: scroll;
+	}
 	.float-button-container {
 		position: fixed;
 		display: block;
@@ -71,10 +81,19 @@ button {
 		background-color: white;
 	}
 	.measure-meter {
-		margin-bottom: 5px;
+		padding-bottom: 5px;
 	}
 }
-@media screen and (max-width: 990px) and (orientation: landscape) {
+@media screen and (max-width: 1250px) and (orientation: landscape) {
+	html,
+	body {
+		height: 100%;
+		overflow: hidden;
+	}
+	.wrapper {
+		height: 85%;
+		overflow-y: scroll;
+	}
 	.float-meters-container {
 		position: fixed;
 		display: inline;

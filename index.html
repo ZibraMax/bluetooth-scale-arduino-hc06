@@ -48,24 +48,29 @@
 		<link rel="manifest" href="./manifest.json" />
 	</head>
 	<body>
-		<div class="float-meters-container">
-			<p class="measure-meter">Mass: <span id="value"></span></p>
-			<p class="measure-meter">Time: <span id="valueTime"></span></p>
-		</div>
+		<div class="wrapper">
+			<div class="float-meters-container">
+				<p class="measure-meter">
+					<span id="deviceInfo">Device disconected</span>
+				</p>
+				<p class="measure-meter">Mass: <span id="value"></span></p>
+				<p class="measure-meter">Time: <span id="valueTime"></span></p>
+			</div>
 
-		<div class="column-container plot-container">
-			<div id="mass" class="two-column plots"></div>
-			<div id="flow" class="two-column plots"></div>
-		</div>
+			<div class="column-container plot-container">
+				<div id="mass" class="two-column plots"></div>
+				<div id="flow" class="two-column plots"></div>
+			</div>
 
-		<div class="float-button-container">
-			<button id="bton">Connect</button>
-			<button id="tare">Tare</button>
-			<button id="buttonPause">Pause</button>
-			<button id="buttonRestart">Restart</button>
-			<button id="buttonStop">Stop!</button>
-			<button id="buttonDisconect">Disconnect</button>
-			<button id="buttonDownload">Download data</button>
+			<div class="float-button-container">
+				<button id="bton">Connect</button>
+				<button id="tare">Tare</button>
+				<button id="buttonPause">Pause</button>
+				<button id="buttonRestart">Restart</button>
+				<button id="buttonStop">Stop!</button>
+				<button id="buttonDisconect">Disconnect</button>
+				<button id="buttonDownload">Download data</button>
+			</div>
 		</div>
 
 		<script type="module" src="./js/main.js"></script>

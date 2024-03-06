@@ -1,6 +1,7 @@
 import { BluetoothTerminal } from "./BluetoothTerminal.js";
 
 const text = document.getElementById("value");
+const textDevice = document.getElementById("deviceInfo");
 const textTime = document.getElementById("valueTime");
 const button = document.getElementById("bton");
 const buttonTare = document.getElementById("tare");
@@ -35,7 +36,6 @@ function download(filename, text) {
 const dataMass = { x: [0], y: [0], mode: "lines", line: { shape: "spline" } };
 const dataFlow = { x: [0], y: [0], mode: "lines", line: { shape: "spline" } };
 const layout_mass = {
-	title: "Mass vs time",
 	xaxis: {
 		title: "Time [s]",
 	},
@@ -45,9 +45,14 @@ const layout_mass = {
 	font: {
 		family: "Space Mono, monospace",
 	},
+	margin: {
+		t: 23,
+		l: 40,
+		r: 23,
+		pad: 0,
+	},
 };
 const layout_vel = {
-	title: "Flow vs time",
 	xaxis: {
 		title: "Time [s]",
 	},
@@ -57,9 +62,15 @@ const layout_vel = {
 	font: {
 		family: "Space Mono, monospace",
 	},
+	margin: {
+		t: 23,
+		l: 40,
+		r: 23,
+		pad: 0,
+	},
 };
 
-const config = { responsive: true };
+const config = { responsive: true, displayModeBar: false };
 var paused = false;
 Plotly.newPlot("mass", [dataMass], layout_mass, config);
 Plotly.newPlot("flow", [dataFlow], layout_vel, config);
@@ -68,7 +79,7 @@ Plotly.newPlot("flow", [dataFlow], layout_vel, config);
 let terminal = new BluetoothTerminal();
 
 // Override `receive` method to handle incoming data as you want.
-
+let wavelock;
 button.addEventListener("click", () => {
 	let offsetTime = 0;
 	text.innerHTML = "Loading!";
@@ -76,6 +87,13 @@ button.addEventListener("click", () => {
 		terminal.connect().then(() => {
 			console.log(terminal.getDeviceName() + " is connected!");
 			terminal.send("tks");
+			textDevice.innerHTML = "Connected to " + terminal.getDeviceName();
+			try {
+				wavelock = navigator.wakeLock.request("screen");
+				console.log("Screen Wake Lock is active");
+			} catch (err) {
+				console.error(err);
+			}
 
 			let connected = true;
 			buttonPause.addEventListener("click", () => {
@@ -137,21 +155,22 @@ button.addEventListener("click", () => {
 				buttonPause.innerHTML = "Start!";
 			});
 			buttonDisconect.addEventListener("click", async () => {
-				connected = false;
 				terminal.disconnect();
+				wavelock.release();
+				textDevice.innerHTML = "Device disconected";
 			});
 
 			terminal.receive = function (value) {
 				if (!value.includes("#")) {
-					if (!paused) {
-						let datos = value.split("//");
-						let tiempo = parseFloat(datos[0]) / 1000.0;
-						let masa = parseFloat(datos[1]);
-						let velocidad = parseFloat(datos[2]);
-						let n_datos = parseInt(datos[3]);
-						text.innerHTML = masa + " g";
-						textTime.innerHTML = parseTime(tiempo);
+					let datos = value.split("//");
+					let tiempo = parseFloat(datos[0]) / 1000.0;
+					let masa = parseFloat(datos[1]);
+					let velocidad = parseFloat(datos[2]);
+					let n_datos = parseInt(datos[3]);
+					text.innerHTML = masa + " g";
+					textTime.innerHTML = parseTime(tiempo);
 
+					if (!paused) {
 						if (tiempo < dataFlow.x[dataFlow.x.length - 1]) {
 							dataMass.x = [0];
 							dataMass.y = [0];
