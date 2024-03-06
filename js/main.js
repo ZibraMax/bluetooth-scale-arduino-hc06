@@ -71,6 +71,18 @@ const layout_vel = {
 };
 
 const config = { responsive: true, displayModeBar: false };
+
+let queries_static_plot = [
+	"(max-width: 990px) and (orientation: portrait)",
+	"(max-width: 1250px) and (orientation: landscape",
+];
+for (const querie of queries_static_plot) {
+	var x = window.matchMedia(querie);
+	if (x.matches) {
+		config.staticPlot = true;
+	}
+}
+
 var paused = false;
 Plotly.newPlot("mass", [dataMass], layout_mass, config);
 Plotly.newPlot("flow", [dataFlow], layout_vel, config);
@@ -79,7 +91,20 @@ Plotly.newPlot("flow", [dataFlow], layout_vel, config);
 let terminal = new BluetoothTerminal();
 
 // Override `receive` method to handle incoming data as you want.
-let wavelock;
+let wakeLock = null;
+const requestWakeLock = async () => {
+	try {
+		wakeLock = await navigator.wakeLock.request("screen");
+
+		// listen for our release event
+		wakeLock.addEventListener("release", () => {
+			// if wake lock is released alter the UI accordingly
+		});
+	} catch (err) {
+		// if wake lock request fails - usually system related, such as battery
+	}
+};
+
 button.addEventListener("click", () => {
 	let offsetTime = 0;
 	text.innerHTML = "Loading!";
@@ -89,7 +114,7 @@ button.addEventListener("click", () => {
 			terminal.send("tks");
 			textDevice.innerHTML = "Connected to " + terminal.getDeviceName();
 			try {
-				wavelock = navigator.wakeLock.request("screen");
+				requestWakeLock();
 				console.log("Screen Wake Lock is active");
 			} catch (err) {
 				console.error(err);
@@ -156,7 +181,12 @@ button.addEventListener("click", () => {
 			});
 			buttonDisconect.addEventListener("click", async () => {
 				terminal.disconnect();
-				wavelock.release();
+				if (wakeLock !== null) {
+					wakeLock.release().then(() => {
+						wakeLock = null;
+						console.log("Wavelock disconeceted");
+					});
+				}
 				textDevice.innerHTML = "Device disconected";
 			});
 
