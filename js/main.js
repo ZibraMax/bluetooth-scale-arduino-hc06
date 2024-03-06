@@ -46,21 +46,112 @@ Plotly.newPlot("flow", [dataFlow], layout_vel, config);
 let terminal = new BluetoothTerminal();
 
 // Override `receive` method to handle incoming data as you want.
-terminal.receive = function (data) {
-	alert(data);
-};
 
 button.addEventListener("click", () => {
+	let offsetTime = 0;
+	text.innerHTML = "Loading!";
 	try {
 		terminal.connect().then(() => {
-			alert(terminal.getDeviceName() + " is connected!");
-			// Send something to the connected device.
-			terminal.send("Simon says: Hello, world!");
+			console.log(terminal.getDeviceName() + " is connected!");
+			terminal.send("t");
+			terminal.send("k");
+			terminal.send("s");
 
-			// Disconnect from the connected device.
-			terminal.disconnect();
+			let connected = true;
+			buttonPause.addEventListener("click", () => {
+				terminal.send("p");
+				if (paused) {
+					paused = false;
+					buttonPause.innerHTML = "Pause";
+				} else {
+					paused = true;
+					buttonPause.innerHTML = "Resume";
+				}
+			});
+			buttonDownload.addEventListener("click", () => {
+				download(
+					`mass_${new Date().toJSON().slice(0, 19)}.json`.replaceAll(
+						":",
+						"-"
+					),
+					JSON.stringify(dataMass)
+				);
+				download(
+					`flow_${new Date().toJSON().slice(0, 19)}.json`.replaceAll(
+						":",
+						"-"
+					),
+					JSON.stringify(dataFlow)
+				);
+			});
+
+			buttonRestart.addEventListener("click", () => {
+				try {
+					writer.write("k");
+					writer.write("t");
+				} catch (error) {}
+				dataMass.x = [0];
+				dataMass.y = [0];
+				dataFlow.x = [0];
+				dataFlow.y = [0];
+				Plotly.redraw("mass");
+				Plotly.redraw("flow");
+			});
+			buttonTare.addEventListener("click", () => {
+				writer.write("t");
+			});
+			buttonStop.addEventListener("click", () => {
+				terminal.send("t");
+				terminal.send("k");
+				if (!paused) {
+					terminal.send("p");
+					paused = true;
+				}
+				dataMass.x = [0];
+				dataMass.y = [0];
+				dataFlow.x = [0];
+				dataFlow.y = [0];
+				Plotly.redraw("mass");
+				Plotly.redraw("flow");
+
+				textTime.innerHTML = "0 s";
+				buttonPause.innerHTML = "Start!";
+			});
+			buttonDisconect.addEventListener("click", async () => {
+				connected = false;
+				terminal.disconnect();
+			});
+
+			terminal.receive = function (value) {
+				if (!value.includes("#")) {
+					if (!paused) {
+						let datos = value.split("//");
+						let tiempo = parseFloat(datos[0]) / 1000.0;
+						let masa = parseFloat(datos[1]);
+						let velocidad = parseFloat(datos[2]);
+						let n_datos = parseInt(datos[3]);
+						text.innerHTML = masa + " g";
+						textTime.innerHTML = tiempo + " s";
+
+						if (tiempo < dataFlow.x[dataFlow.x.length - 1]) {
+							dataMass.x = [0];
+							dataMass.y = [0];
+							dataFlow.x = [0];
+							dataFlow.y = [0];
+						}
+						dataMass.x.push(tiempo);
+						dataFlow.x.push(tiempo);
+						dataMass.y.push(masa);
+						dataFlow.y.push(velocidad);
+						Plotly.redraw("mass");
+						Plotly.redraw("flow");
+					}
+				} else {
+					text.innerHTML = value;
+				}
+			};
 		});
 	} catch (error) {
-		alert(error.message);
+		text.innerHTML = "Device disconected! Try again!";
 	}
 });
