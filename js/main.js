@@ -10,6 +10,22 @@ const buttonDisconect = document.getElementById("buttonDisconect");
 const buttonPause = document.getElementById("buttonPause");
 const buttonDownload = document.getElementById("buttonDownload");
 
+function download(filename, text) {
+	var element = document.createElement("a");
+	element.setAttribute(
+		"href",
+		"data:text/plain;charset=utf-8," + encodeURIComponent(text)
+	);
+	element.setAttribute("download", filename);
+
+	element.style.display = "none";
+	document.body.appendChild(element);
+
+	element.click();
+
+	document.body.removeChild(element);
+}
+
 const dataMass = { x: [0], y: [0], mode: "lines", line: { shape: "spline" } };
 const dataFlow = { x: [0], y: [0], mode: "lines", line: { shape: "spline" } };
 const layout_mass = {

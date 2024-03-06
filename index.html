@@ -38,7 +38,6 @@
 			sizes="16x16"
 			href="./favicon/favicon-16x16.png"
 		/>
-		<link rel="manifest" href="./favicon/site.webmanifest" />
 		<link
 			rel="mask-icon"
 			href="./favicon/safari-pinned-tab.svg"
@@ -46,6 +45,7 @@
 		/>
 		<meta name="msapplication-TileColor" content="#da532c" />
 		<meta name="theme-color" content="#ffffff" />
+		<link rel="manifest" href="manifest.json" />
 	</head>
 	<body style="padding: 20px">
 		<div class="column-container plot-container">
@@ -70,5 +70,24 @@
 		</div>
 
 		<script type="module" src="./js/main.js"></script>
+		<script>
+			if ("serviceWorker" in navigator) {
+				navigator.serviceWorker.register("./js/sw.js").then(
+					(registration) => {
+						console.log(
+							"Service worker registration successful:",
+							registration
+						);
+					},
+					(error) => {
+						console.error(
+							`Service worker registration failed: ${error}`
+						);
+					}
+				);
+			} else {
+				console.error("Service workers are not supported.");
+			}
+		</script>
 	</body>
 </html>
