@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Scale</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			media="screen"
+			href="./css/main.css"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="./css/picnic.css" />
+
+		<script src="./js/plotly-2.29.1.min.js" charset="utf-8"></script>
+	</head>
+	<body style="padding: 20px">
+		<div class="column-container plot-container">
+			<div id="mass" class="two-column plots"></div>
+			<div id="flow" class="two-column plots"></div>
+		</div>
+
+		<div class="float-meters-container">
+			<p class="measure-meter">Mass: <span id="value"></span></p>
+			<hr />
+			<p class="measure-meter">Time: <span id="valueTime"></span></p>
+		</div>
+
+		<div class="float-button-container">
+			<button id="bton">Connect</button>
+			<button id="tare">Tare</button>
+			<button id="buttonPause">Pause</button>
+			<button id="buttonRestart">Restart</button>
+			<button id="buttonStop">Stop!</button>
+			<button id="buttonDisconect">Disconnect</button>
+			<button id="buttonDownload">Download data</button>
+		</div>
+
+		<script type="module" src="./js/main_hc06.js"></script>
+	</body>
+</html>
