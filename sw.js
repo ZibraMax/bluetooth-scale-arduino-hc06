@@ -1,8 +1,9 @@
-const VERSION = "v1.1";
+const VERSION = "v1.2";
 const CACHE_NAME = `cofee-BT-scale-${VERSION}`;
 const APP_STATIC_RESOURCES = [
 	"./",
 	"./index.html",
+	"./manifest.json",
 	"./css/main.css",
 	"./css/picnic.css",
 	"./js/main.js",
@@ -16,6 +17,7 @@ const APP_STATIC_RESOURCES = [
 	"./favicon/android-chrome-192x192.png",
 	"./favicon/android-chrome-256x256.png",
 	"./favicon/android-chrome-384x384.png",
+	"./favicon/icon512x512.png",
 	"./favicon/apple-touch-icon.png",
 	"./favicon/browserconfig.xml",
 	"./favicon/favicon-16x16.png",
