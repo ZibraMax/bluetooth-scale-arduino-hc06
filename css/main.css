@@ -6,6 +6,7 @@ button {
 }
 
 .measure-meter {
+	margin: 0;
 }
 
 .two-column {
@@ -33,27 +34,62 @@ button {
 .float-meters-container {
 	position: fixed;
 	display: inline;
-	min-width: 200px;
-	max-height: 130px;
+	min-width: 160px;
 	bottom: 40px;
 	left: 50px;
-	padding: 5px;
-	padding-top: 0px;
-	padding-bottom: 0px;
+	padding-left: 5px;
 	text-align: left;
 	border: solid lightgray;
 	border-radius: 10px;
 	box-shadow: 10px 5px 5px lightgray;
 	background-color: white;
+	z-index: 100;
 }
 @media screen and (max-width: 990px) and (orientation: portrait) {
 	.two-column {
 		width: 100%;
 	}
 	.float-meters-container {
+		position: sticky;
+		display: block;
+		top: 0px;
+		border: none;
+		border-radius: 0px;
+		border-bottom: solid lightgray;
+		box-shadow: 0px 0px 0px lightgray;
+		background-color: white;
+		width: 100%;
+		z-index: 100;
+	}
+	.float-button-container {
+		position: fixed;
+		display: block;
+		width: 100%;
+		left: 0px;
+		bottom: 0px;
+		border-top: solid lightgray;
+		background-color: white;
+	}
+	.measure-meter {
+		margin-bottom: 5px;
+	}
+}
+@media screen and (max-width: 990px) and (orientation: landscape) {
+	.float-meters-container {
 		position: fixed;
 		display: inline;
-		top: 40px;
+		padding-left: 5px;
+		top: 0px;
+		bottom: auto;
+		left: 0px;
 		text-align: left;
+		border: none;
+		border-bottom: solid lightgray;
+		border-right: solid lightgray;
+		border-radius: 0px;
+		border-bottom-right-radius: 5px;
+		box-shadow: 0px 0px 0px lightgray;
+		background-color: #ffffff5e;
+		z-index: 100;
 	}
 }

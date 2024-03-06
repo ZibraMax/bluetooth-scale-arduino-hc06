@@ -47,16 +47,15 @@
 		<meta name="theme-color" content="#ffffff" />
 		<link rel="manifest" href="./manifest.json" />
 	</head>
-	<body style="padding: 20px">
+	<body>
+		<div class="float-meters-container">
+			<p class="measure-meter">Mass: <span id="value"></span></p>
+			<p class="measure-meter">Time: <span id="valueTime"></span></p>
+		</div>
+
 		<div class="column-container plot-container">
 			<div id="mass" class="two-column plots"></div>
 			<div id="flow" class="two-column plots"></div>
-		</div>
-
-		<div class="float-meters-container">
-			<p class="measure-meter">Mass: <span id="value"></span></p>
-			<hr />
-			<p class="measure-meter">Time: <span id="valueTime"></span></p>
 		</div>
 
 		<div class="float-button-container">

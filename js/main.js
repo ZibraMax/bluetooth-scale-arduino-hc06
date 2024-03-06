@@ -10,6 +10,12 @@ const buttonDisconect = document.getElementById("buttonDisconect");
 const buttonPause = document.getElementById("buttonPause");
 const buttonDownload = document.getElementById("buttonDownload");
 
+function parseTime(time) {
+	const minutes = Math.floor(time / 60);
+	const seconds = time - minutes * 60;
+	return minutes + ":" + Math.round(seconds);
+}
+
 function download(filename, text) {
 	var element = document.createElement("a");
 	element.setAttribute(
@@ -144,7 +150,7 @@ button.addEventListener("click", () => {
 						let velocidad = parseFloat(datos[2]);
 						let n_datos = parseInt(datos[3]);
 						text.innerHTML = masa + " g";
-						textTime.innerHTML = tiempo + " s";
+						textTime.innerHTML = parseTime(tiempo);
 
 						if (tiempo < dataFlow.x[dataFlow.x.length - 1]) {
 							dataMass.x = [0];
