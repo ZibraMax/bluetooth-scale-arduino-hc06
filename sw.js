@@ -1,4 +1,4 @@
-const VERSION = "v1.2";
+const VERSION = "v1.3";
 const CACHE_NAME = `cofee-BT-scale-${VERSION}`;
 const APP_STATIC_RESOURCES = [
 	"./",
