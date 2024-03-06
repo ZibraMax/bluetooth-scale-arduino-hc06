@@ -53,9 +53,7 @@ button.addEventListener("click", () => {
 	try {
 		terminal.connect().then(() => {
 			console.log(terminal.getDeviceName() + " is connected!");
-			terminal.send("t");
-			terminal.send("k");
-			terminal.send("s");
+			terminal.send("tks");
 
 			let connected = true;
 			buttonPause.addEventListener("click", () => {
@@ -87,8 +85,7 @@ button.addEventListener("click", () => {
 
 			buttonRestart.addEventListener("click", () => {
 				try {
-					writer.write("k");
-					writer.write("t");
+					terminal.send("kt");
 				} catch (error) {}
 				dataMass.x = [0];
 				dataMass.y = [0];
@@ -98,14 +95,14 @@ button.addEventListener("click", () => {
 				Plotly.redraw("flow");
 			});
 			buttonTare.addEventListener("click", () => {
-				writer.write("t");
+				terminal.send("t");
 			});
 			buttonStop.addEventListener("click", () => {
-				terminal.send("t");
-				terminal.send("k");
 				if (!paused) {
-					terminal.send("p");
+					terminal.send("tkp");
 					paused = true;
+				} else {
+					terminal.send("tk");
 				}
 				dataMass.x = [0];
 				dataMass.y = [0];

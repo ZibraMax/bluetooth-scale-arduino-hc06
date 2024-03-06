@@ -102,8 +102,8 @@ void loop()
   }
   if (hc06.available())
   {
-    int btmsg = hc06.read();
-    manipulateInput(btmsg);
+    int msg = hc06.read();
+    manipulateInput(msg);
   }
   if (midiendo)
   {

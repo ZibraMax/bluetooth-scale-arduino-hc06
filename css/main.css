@@ -44,6 +44,7 @@ button {
 	border: solid lightgray;
 	border-radius: 10px;
 	box-shadow: 10px 5px 5px lightgray;
+	background-color: white;
 }
 @media screen and (max-width: 990px) and (orientation: portrait) {
 	.two-column {
